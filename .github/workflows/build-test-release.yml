@@ -1,4 +1,4 @@
-name: CI-Build-Test
+name: CI-Build-Test-Release
 
 on:
   push:
@@ -19,13 +19,11 @@ jobs:
         with:
           node-version: 20
       
-      - name: Install dependencies
-        run: |
-          npm i -g @vercel/ncc
-          npm i @actions/github
-      
       - name: Build project
-        run: npm run build
+        run: |
+          echo "📦 Building project..."
+          npm run build
+          ls -la dist/
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -48,25 +46,17 @@ jobs:
           path: dist/
       
       - name: Run unit tests
-        env:
-          TEST_ENV: unit
         run: |
           echo "🧪 Running UNIT tests..."
-          echo "📦 Environment: $TEST_ENV"
           
-          # Verificar estructura del build
+          # Verificar que el build existe
           if [ ! -f "dist/index.js" ]; then
             echo "❌ ERROR: dist/index.js not found!"
             exit 1
           fi
           
+          echo "✅ Build artifact verified"
           echo "✅ File structure validation passed"
-          
-          # Simular unit tests
-          echo "Testing basic functionality..."
-          node -e "console.log('✓ Module loading test passed')"
-          node -e "const fs = require('fs'); if(fs.existsSync('dist/index.js')) console.log('✓ Build artifact test passed')"
-          
           echo "✅ All unit tests passed!"
 
   test-integration:
@@ -83,16 +73,13 @@ jobs:
           path: dist/
       
       - name: Run integration tests
-        env:
-          TEST_ENV: integration
         run: |
           echo "🧪 Running INTEGRATION tests..."
-          echo "📦 Environment: $TEST_ENV"
           
-          # Test simplificado para el lab (sin dependencias externas)
-          echo "🔄 Testing workflow integration..."
+          # Ejecutar el script
+          node dist/index.js
           
-          if [ -f "dist/index.js" ]; then
+          if [ $? -eq 0 ]; then
             echo "✅ Integration test passed successfully!"
           else
             echo "❌ Integration test failed!"
