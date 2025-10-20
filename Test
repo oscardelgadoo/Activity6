@@ -1,0 +1,6 @@
+
+echo "test" >> README.md
+git add README.md
+git commit -m "Test direct push"
+git push origin main
+```
