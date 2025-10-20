@@ -1,3 +1,7 @@
+function formatTime(date) {
+  return date.toLocaleTimeString();
+}
+
 function formatDate(date) {
   return date.toISOString();
 }
