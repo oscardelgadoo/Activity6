@@ -37,7 +37,7 @@ console.log('✓ greet("World"):', greet('World'));
 console.log('✓ calculate(5, 3):', calculate(5, 3));
 console.log('✓ validate("test"):', validate('test'));
 
-console.log('✅ Application initialized successfully');
+console.log('✅ Application initialized successfully by nadua sotelo ^_^');
 
 // Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
