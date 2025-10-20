@@ -7,7 +7,7 @@ function formatDate(date) {
 }
 
 function validateEmail(email) {
-  return email.includes('@');
+  return email.includes('@') && email.includes('.');
 }
 
 module.exports = { formatDate, validateEmail };
